@@ -17,9 +17,6 @@ function App() {
         <input type="text" id="lodestone-link" />
         <button type="submit">Get Achievements</button>
       </form>
-      
-      
-
     </div>
   );
 
