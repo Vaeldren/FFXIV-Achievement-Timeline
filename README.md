@@ -3,6 +3,7 @@
 Front-end made with React, HTML, CSS and JavaScript. Backend made using Python with Flask.
 
 Demonstration website: TBA
+
 Use this url for testing purposes if you do not have one of your own: https://eu.finalfantasyxiv.com/lodestone/character/22192778/
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
