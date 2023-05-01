@@ -6,12 +6,13 @@ function Timeline({ achievements }) {
   // Map the achievements to timeline elements
   const timelineElements = achievements.map((achievement) => (
     <VerticalTimelineElement
-      key={achievement.id}
-      date={new Date(achievement.date).toLocaleDateString()}
+      key={achievement[0]}
+      date={new Date(achievement[1].date).toLocaleDateString()}
       icon={<i className="fas fa-trophy"></i>}
     >
-      <h3>{achievement.title}</h3>
-      <p>{achievement.description}</p>
+      <h3>{achievement[1].title}</h3>
+      <h5>{achievement[1].patch}</h5>
+      <p>{achievement[1].description}</p>
     </VerticalTimelineElement>
   ));
 

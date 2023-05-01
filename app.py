@@ -83,6 +83,7 @@ def get_achievements():
             data = ids_to_check[id]
             #make new dict and append
             results[id] = {
+                'title': data['title'],
                 'date': date,
                 'description': data['description'],
                 'patch': data['patch'],
