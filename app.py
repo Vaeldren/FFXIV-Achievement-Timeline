@@ -3,6 +3,8 @@ import asyncio
 import requests
 import datetime
 
+
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -11,11 +13,16 @@ def get_achievements():
     #get data - not hardcode for final
     data = r.json()
     #convert to json format
-    achievements = data['Achievements']['List']
-    #stores achievement list
+    try:
+        achievements = data['Achievements']['List']
+        #stores achievement list
+        if not achievements:
+            return "private"
+    except KeyError:
+        return "wrong"
 
     ids_to_check = {
-     310: {"title": "The Lominsan Envoy", "description": "Embarked on a journey from the maritime city-state of Limsa Lominsa.", "patch": "A Realm Reborn patch 2.0", "type": "msq"},
+    310: {"title": "The Lominsan Envoy", "description": "Embarked on a journey from the maritime city-state of Limsa Lominsa.", "patch": "A Realm Reborn patch 2.0", "type": "msq"},
     311: {"title": "The Gridanian Envoy", "description": "Embarked on a journey from the forest nation of Gridania.", "patch": "A Realm Reborn patch 2.0", "type": "msq"},
     312: {"title": "The Ul'dah Envoy", "description": "Embarked on a journey from the desert city-state of Ul'dah.", "patch": "A Realm Reborn patch 2.0", "type": "msq"},
     788: {"title": "The Ultimate Weapon", "description": "Defeated the Ultima Weapon and brought down the head of the XIVth Imperial Legion, Gaius van Baelsar.", "patch": "A Realm Reborn patch 2.0", "type": "msq"},
@@ -57,7 +64,8 @@ def get_achievements():
     3162: {"title": "Heart to Heartless", "description": "See Omega's experiment to its ultimate conclusion in the Omega Protocol (Ultimate).", "patch": "Endwalker patch 6.3", "type": "raid"}
     }
     #ids to check, also add images
-    keys = [frozenset(d.items()) for d in ids_to_check.values()]
+    keys = {frozenset(d.items()): None for d in ids_to_check.values()}
+
 
     
     results = {key: None for key in keys}
@@ -65,25 +73,30 @@ def get_achievements():
     for achievement in achievements:
         id =  achievement['ID']
         datestr = achievement['Date']
-        date = datetime.datetime.fromtimestamp(int(datestr))
+        date = datetime.datetime.fromtimestamp(datestr)
 
 
         if id in ids_to_check:
             data = ids_to_check[id]
+            print(datestr)
+            print(date)
+            #make new dict and append
             results[id] = {
                 'date': date,
                 'description': data['description'],
                 'patch': data['patch'],
                 'type': data['type']
             }
-
+            print(results[id])
             if all(date is not None for date in results.values()):
                 break
     
-    results = {str(k): v for k, v in results.items()}
     
+    keys_to_exclude = {type(frozenset())}
+    filtered_dict = {k: v for k, v in results.items() if type(k) not in keys_to_exclude}
+    sorted_dict = sorted(filtered_dict.items(), key=lambda x: x[1]['date'])
     
-    return results
+    return sorted_dict
 
 if __name__ == '__main__':
     app.run()
