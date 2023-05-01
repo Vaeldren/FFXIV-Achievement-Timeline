@@ -1,3 +1,7 @@
+import './App.css';
+import React, { useState } from "react";
+import Timeline from './Timeline'
+
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState(null);
@@ -23,6 +27,7 @@ function App() {
       setIsLoading(false);
       //handle error
       console.error(error);
+      console.log(error);
     }
   }
 
@@ -43,3 +48,5 @@ function App() {
     </div>
   );
 };
+
+export default App;
