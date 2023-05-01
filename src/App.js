@@ -11,7 +11,7 @@ function App() {
     event.preventDefault();
     setIsLoading(true);
     try {
-      const response = await fetch('/get_achievements', {
+      const response = await fetch('/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
