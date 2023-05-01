@@ -1,13 +1,16 @@
-from flask import Flask, jsonify
+
 import asyncio
 import requests
 import datetime
-
-
-
+from flask import Flask
+from flask_cors import CORS, cross_origin
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
-@app.route('/')
+@app.route('/api/get')
+
+
 def get_achievements():
     r = requests.get('https://xivapi.com/character/22192778?data=AC')
     #get data - not hardcode for final
@@ -78,8 +81,6 @@ def get_achievements():
 
         if id in ids_to_check:
             data = ids_to_check[id]
-            print(datestr)
-            print(date)
             #make new dict and append
             results[id] = {
                 'date': date,
@@ -87,7 +88,6 @@ def get_achievements():
                 'patch': data['patch'],
                 'type': data['type']
             }
-            print(results[id])
             if all(date is not None for date in results.values()):
                 break
     
