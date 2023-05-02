@@ -20,9 +20,9 @@ def get_achievements():
         achievements = data['Achievements']['List']
         #stores achievement list
         if not achievements:
-            return "private"
+            return ValueError
     except KeyError:
-        return "wrong"
+        return KeyError
 
     ids_to_check = {
     310: {"title": "The Lominsan Envoy", "description": "Embarked on a journey from the maritime city-state of Limsa Lominsa.", "patch": "A Realm Reborn patch 2.0", "type": "msq"},
